@@ -11,6 +11,8 @@ docker compose up
 
 (more info here: https://docs.microsoft.com/en-us/azure/container-instances/tutorial-docker-compose#create-azure-context)
 
+docker ps
+
 
 {
   "name": "CosmosDBDemo",
@@ -21,7 +23,7 @@ docker compose up
   "topics": [
     "productinventory"
   ],
-  "connect.cosmos.connection.endpoint": "https://kafkaonazure-cosmos-demo.documents.azure.com:443/",
+  "connect.cosmos.connection.endpoint": "<your connection endpoint>",
   "connect.cosmos.master.key": "****************************************************************************************",
   "connect.cosmos.databasename": "gnconnect",
   "connect.cosmos.containers.topicmap": "productinventory#product",
