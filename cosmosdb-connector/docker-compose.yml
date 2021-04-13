@@ -88,6 +88,7 @@ services:
       apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
       confluent-hub install --no-prompt microsoftcorporation/kafka-connect-cosmos:1.0.4-beta
       confluent-hub install --no-prompt confluentinc/kafka-connect-azure-blob-storage:1.1.1
+      confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:0.4.0
      
       #
       echo "Launching Kafka Connect worker"
