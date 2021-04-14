@@ -2,7 +2,6 @@
 ---
 version: '2'
 services:
-  
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.0.1
     hostname: control-center
@@ -38,7 +37,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: $BOOTSTRAP_SERVERS
+      CONNECT_BOOTSTRAP_SERVERS: ${BOOTSTRAP_SERVERS}
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: "connect"
       CONNECT_CONFIG_STORAGE_TOPIC: demo-connect-configs
@@ -89,7 +88,6 @@ services:
       confluent-hub install --no-prompt microsoftcorporation/kafka-connect-cosmos:1.0.4-beta
       confluent-hub install --no-prompt confluentinc/kafka-connect-azure-blob-storage:1.1.1
       confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:0.4.0
-     
       #
       echo "Launching Kafka Connect worker"
       /etc/confluent/docker/run & 
