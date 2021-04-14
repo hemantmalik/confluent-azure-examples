@@ -1,0 +1,36 @@
+== Configure Docker ACI Integration
+The link:https://docs.docker.com/cloud/aci-integration/[Docker Azure Integration] enables developers to use native Docker commands to run applications in Azure Container Instances (ACI) when building cloud-native applications. We are using this integration in this example to make the configuration easier, and hopefully leveraging a well known standard (Docker and its compose feature). 
+
+== Prerequisites
+
+1. *Azure CLI* - You must have the Azure CLI installed on your local computer. Version 2.10.1 or later is recommended. Run az --version to find the version. If you need to install or upgrade, see link:https://docs.microsoft.com/en-us/cli/azure/install-azure-cli[Install the Azure CLI].
+2. *Docker Desktop* - You must use Docker Desktop version 2.3.0.5 or later, available for link:https://desktop.docker.com/win/edge/Docker%20Desktop%20Installer.exe[Windows] or link:https://desktop.docker.com/mac/edge/Docker.dmg[macOS]. Or install the link:https://docs.docker.com/engine/context/aci-integration/#install-the-docker-aci-integration-cli-on-linux[Docker ACI Integration CLI for Linux].
+
+
+=== Create Azure Context
+To use Docker commands to run containers in Azure Container Instances, first log into Azure:
+
+[source]
+----
+docker login azure
+----
+
+When prompted, enter or select your Azure credentials.
+
+Create an ACI context by running docker context create aci. This context associates Docker with an Azure subscription and resource group so you can create and manage container instances. For example, to create a context called myacicontext:
+
+[source]
+----
+docker context create aci myacicontext
+----
+
+When prompted, select your Azure subscription ID, then select an existing resource group or create a new resource group. If you choose a new resource group, it's created with a system-generated name. Azure container instances, like all Azure resources, must be deployed into a resource group. Resource groups allow you to organize and manage related Azure resources.
+
+Run docker context ls to confirm that you added the ACI context to your Docker contexts:
+
+[source]
+----
+docker context ls
+----
+
+If you struggle in getting this set up, have a look at link:https://docs.microsoft.com/en-us/azure/container-instances/tutorial-docker-compose[this documentation] or link:https://devblogs.microsoft.com/devops/publishing-azure-container-instances-from-docker-cli/[this guide] for a more thorough explanation.

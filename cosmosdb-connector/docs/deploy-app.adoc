@@ -1,0 +1,21 @@
+
+=== Deploy application  to Azure Container Instances
+Next, change to the ACI context. Subsequent Docker commands run in this context.
+
+[source]
+----
+docker context use myacicontext
+----
+
+Run docker compose up to start the application in Azure Container Instances. The azure-vote-front image is pulled from your container registry and the container group is created in Azure Container Instances.
+
+[source]
+----
+docker compose up
+----
+
+[Note]
+====
+Docker Compose commands currently available in an ACI context are docker compose up and docker compose down. There is no hyphen between docker and compose in these commands.
+====
+

@@ -1,0 +1,74 @@
+= Sink data from Confluent Cloud to CosmosDB
+:doctype: book
+:imagesdir: .
+:topicname: productinventory
+
+== Prerequisites
+1. link:https://portal.azure.com/[Microsoft Azure account]
+2. link:https://www.confluent.io/confluent-cloud/tryfree/[Confluent Cloud] account (or leverage the link:https://azure.microsoft.com/en-us/blog/introducing-seamless-integration-between-microsoft-azure-and-confluent-cloud/[seamless integration between Microsoft Azure and Confluent Cloud])
+
+
+== Objective
+This step-by-step guide will guide you into generating sample data in Confluent Cloud topic, setting up your self managed Control Center and Confluent Connect cluster in Azure Container Service and finally sink the data to CosmosDB
+
+Prepare the Confluent Cloud environment
+
+* Step 1: Create a Kafka cluster
+* Step 2: Enable Schema Registry
+* Step 3: Configure Confluent Cloud Datagen Source connector
+
+Prepare the Confluent Platform environment on ACI
+
+* Step 11: Tear down the demo
+
+[IMPORTANT]
+====
+If you are in a Windows environment, use Powershell to execute the instructions
+====
+
+include::create-ccloud-resources.adoc[]
+
+include::docker-aci.adoc[]
+
+=== Download this repo
+
+If you don't have this repository already, Use git to clone it to your development environment:
+
+[source]
+----
+git clone https://github.com/confluentinc/confluent-azure-examples.git
+----
+
+Change into the cloned directory.
+
+[source]
+----
+cd confluent-azure-examples/cosmosdb-connector
+----
+
+=== Configure the .env file
+Before deploying Confluent Platform on Azure you will need to collect your relevant environment variables in a .env file. Remember the API Keys we created in Confluent Cloud? Now we'll use them :)
+
+Create a .env file in the cosmosdb-connector folder, as the example below:
+
+[source]
+----
+AZ_LOCATION=centralus
+AZ_SUBSCRIPTION=<YOUR AZURE SUBSCRIPTION NAME>
+AZ_RESOURCE_GROUP=<YOUR RESOURCE GROUP>
+BOOTSTRAP_SERVERS=<CCLOUD BOOTSTRAP SERVER>
+BASIC_AUTH_CREDENTIALS_SOURCE="USER_INFO"
+SCHEMA_REGISTRY_URL=<CCLOUD SCHEMA REGISTRY>
+SCHEMA_REGISTRY_BASIC_AUTH_USER_INFO=<SCHEMA REGISTRY KEY>:<SCHEMA REGISTRY SECRET>
+SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="<CCLOUD BROKER KEY>" password="<CCLOUD BROKER SECRET>";
+----
+
+include::deploy-app.adoc[]
+
+
+
+In a short time, the container group is deployed. Sample output:
+
+
+
+
