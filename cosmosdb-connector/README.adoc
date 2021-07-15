@@ -1,0 +1,33 @@
+
+docker login azure 
+
+docker context create aci myacicontext
+
+docker context ls
+
+docker context use myacicontext
+
+docker compose up
+
+(more info here: https://docs.microsoft.com/en-us/azure/container-instances/tutorial-docker-compose#create-azure-context)
+
+docker ps
+
+
+{
+  "name": "CosmosDBDemo",
+  "connector.class": "com.azure.cosmos.kafka.connect.sink.CosmosDBSinkConnector",
+  "tasks.max": "1",
+  "key.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "topics": [
+    "productinventory"
+  ],
+  "connect.cosmos.connection.endpoint": "<your connection endpoint>",
+  "connect.cosmos.master.key": "****************************************************************************************",
+  "connect.cosmos.databasename": "gnconnect",
+  "connect.cosmos.containers.topicmap": "productinventory#product",
+  "connect.cosmos.sink.useUpsert": false
+}
+
+<your Connect ip>/connectors/CosmosDBDemo/status
