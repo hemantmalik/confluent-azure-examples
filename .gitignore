@@ -8,6 +8,7 @@ terraform-outputs.yml
 state.yml
 
 # Compiled files
+*.out
 *.tfstate
 *.tfstate.backup
 *.tfstate.lock.info
