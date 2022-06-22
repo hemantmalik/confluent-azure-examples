@@ -3,23 +3,18 @@
 **/.envrc
 **/.history
 **/.terraform
-scratch
-terraform-outputs.yml
-state.yml
+**/*.out
+**/*.tfstate
+**/.terraform.lock.hcl
+**/*.tfstate.backup
+**/*.tfstate.lock.info
+**/*.tfplan
+**/scratch
+**/secrets
 
-# Compiled files
-*.out
-*.tfstate
-*.tfstate.backup
-*.tfstate.lock.info
-*terraform.tfplan
-*.terraform.lock.hcl
 
 # logs
 *.log
-
-# Directories
-.terraform/
 
 # New Stuff
 **/.idea/
