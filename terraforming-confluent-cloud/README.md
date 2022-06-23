@@ -2,7 +2,7 @@
 
 The Confluent Terraform Provider is a plugin for Terraform that allows for the lifecycle management of Confluent resources.
 
-This repository provides a quick template to use to create an environment and cluster running on Azure.
+This repository provides a quick template to use to create a Confluent Cloud environment and cluster running on Azure.
 
 ## Documentation
 
@@ -32,6 +32,41 @@ Full documentation is available on the [Terraform website](https://registry.terr
    2. Click **Create a new one to create** tab. Enter the new service account name (`tf_runner`), then click **Next**.
    3. The Cloud API key and secret are generated for the `tf_runner` service account. Save your Cloud API key and secret in a secure location. You will need this API key and secret **to use the Confluent Terraform Provider**.
    4. [Assign](https://confluent.cloud/settings/org/assignments) the `OrganizationAdmin` role to the `tf_runner` service account by following [this guide](https://docs.confluent.io/cloud/current/access-management/access-control/cloud-rbac.html#add-a-role-binding-for-a-user-or-service-account).
+
+## Installation
+
+1. Download and install the providers defined in the configuration:
+
+    ```bash
+    terraform init
+    ```
+
+2. Use the saved Cloud API Key of the `tf_runner` service account to set values to the `confluent_cloud_api_key` and `confluent_cloud_api_secret` input variables [using environment variables](https://www.terraform.io/language/values/variables#environment-variables):
+
+    ```bash
+    export TF_VAR_confluent_cloud_api_key="<cloud_api_key>"
+    export TF_VAR_confluent_cloud_api_secret="<cloud_api_secret>"
+    ```
+
+3. Ensure the configuration is syntactically valid and internally consistent:
+
+    ```bash
+    terraform validate
+    ```
+
+4. Create a Terraform plan:
+
+    ```bash
+    terraform plan -out=tf-cc-azure.tfplan
+    ```
+
+5. Apply the configuration:
+
+    ```bash
+    terraform apply
+    ```
+
+6. You have now created a Confluent Cloud environment and cluster using Terraform running on Azure! Visit the [Confluent Cloud Console](https://confluent.cloud/environments) or use the [Confluent CLI v2](https://docs.confluent.io/confluent-cli/current/migrate.html#directly-install-confluent-cli-v2-x) to see the resources you provisioned.
 
 ## License
 
