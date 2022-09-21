@@ -1,16 +1,12 @@
-# Terraforming Confluent Cloud on Azure
+# Declarative Data Services - Terraforming Confluent Cloud & Elastic Cloud on Azure
 
-The Confluent Terraform Provider is a plugin for Terraform that allows for the lifecycle management of Confluent resources.
+Confluent and Elastic both provide declarative patterns for customers to stand up services using their technologies. In this demo, we will show you how to create a Terraform project that will provision Confluent Cloud and Elastic Cloud on Microsoft Azure.
 
-This repository provides a quick template to use to create a Confluent Cloud environment and cluster running on Azure.
-
-## Documentation
-
-Full documentation is available on the [Terraform website](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs).
+This repository provides a quick demonstration of the Terraform providers for both partners in one. This Terraformed environment can be used as a foundation for other demos.
 
 ## Prerequisites
 
-1. A Confluent Cloud account. If you do not have a Confluent Cloud account, [create one now](https://www.confluent.io/confluent-cloud/tryfree/).
+1. A Confluent Cloud account. If you do not have a Confluent Cloud account, [create one here](https://www.confluent.io/confluent-cloud/tryfree/).
 2. Terraform (0.13+) installed:
     * To ensure you're using the acceptable version of Terraform you may run the following command:
 
@@ -26,13 +22,12 @@ Full documentation is available on the [Terraform website](https://registry.terr
         ```
 
 3. Confluent Cloud requires API keys to manage access and authentication to different parts of the service. An API key consists of a key and a secret. You can create and manage API keys by using either the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html) or the [Confluent Cloud Console](https://confluent.cloud/). Learn more about Confluent Cloud API Key access [here](https://docs.confluent.io/cloud/current/client-apps/api-keys.html#ccloud-api-keys).
-
    1. Open the [Confluent Cloud Console](https://confluent.cloud/settings/api-keys/create) and click **Granular access** tab, and then click **Next**.
-   2. Click **Create a new one to create** tab. Enter the new service account name (`tf_runner`), then click **Next**.
+   2. Click **Create a new one to create** tab. Enter the new service account name (`tf_runner`), then click **Next**
    3. The Cloud API key and secret are generated for the `tf_runner` service account. Save your Cloud API key and secret in a secure location. You will need this API key and secret **to use the Confluent Terraform Provider**.
    4. [Assign](https://confluent.cloud/settings/org/assignments) the `OrganizationAdmin` role to the `tf_runner` service account by following [this guide](https://docs.confluent.io/cloud/current/access-management/access-control/cloud-rbac.html#add-a-role-binding-for-a-user-or-service-account).
 
-## Installation
+## Environment & Cluster Creation
 
 1. Download and install the providers defined in the configuration:
 
@@ -56,16 +51,49 @@ Full documentation is available on the [Terraform website](https://registry.terr
 4. Create a Terraform plan:
 
     ```bash
-    terraform plan -out=tf-cc-azure.tfplan
+    terraform plan -out=cc-elastic-azure.tfplan
     ```
 
 5. Apply the configuration:
 
     ```bash
-    terraform apply
+    terraform apply "cc-elastic-azure.tfplan"
     ```
 
 6. You have now created a Confluent Cloud environment and cluster using Terraform running on Azure! Visit the [Confluent Cloud Console](https://confluent.cloud/environments) or use the [Confluent CLI v2](https://docs.confluent.io/confluent-cli/current/migrate.html#directly-install-confluent-cli-v2-x) to see the resources you provisioned.
+
+## Create Topics
+
+To create the two required topics, add the following block of code to the bottom of the `main.tf` file and re-run the `plan` and `apply` steps.
+
+   ```bash
+   // Creating two topics: pageviews & users
+   resource "confluent_kafka_topic" "pageviews" {
+     kafka_cluster {
+       id = confluent_kafka_cluster.azure-cluster-1.id
+     }
+     topic_name    = "pageviews"
+     rest_endpoint = confluent_kafka_cluster.azure-cluster-1.rest_endpoint
+     credentials {
+       key    = confluent_api_key.app-manager-kafka-api-key.id
+       secret = confluent_api_key.app-manager-kafka-api-key.secret
+     }
+   }
+
+   resource "confluent_kafka_topic" "users" {
+     kafka_cluster {
+       id = confluent_kafka_cluster.azure-cluster-1.id
+     }
+     topic_name    = "users"
+     rest_endpoint = confluent_kafka_cluster.azure-cluster-1.rest_endpoint
+     credentials {
+       key    = confluent_api_key.app-manager-kafka-api-key.id
+       secret = confluent_api_key.app-manager-kafka-api-key.secret
+     }
+   }
+   ```
+
+## Create the Elastic Cloud deployment
 
 ## License
 
