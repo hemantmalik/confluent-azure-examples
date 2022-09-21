@@ -11,9 +11,7 @@ Full documentation is available on the [Terraform website](https://registry.terr
 ## Prerequisites
 
 1. A Confluent Cloud account. If you do not have a Confluent Cloud account, [create one now](https://www.confluent.io/confluent-cloud/tryfree/).
-2. Terraform (0.14+) installed:
-    * Install Terraform version manager [tfutils/tfenv](https://github.com/tfutils/tfenv)
-    * Alternatively, install the [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform)
+2. Terraform (0.13+) installed:
     * To ensure you're using the acceptable version of Terraform you may run the following command:
 
         ```bash
@@ -23,11 +21,12 @@ Full documentation is available on the [Terraform website](https://registry.terr
         Your output should resemble:
 
         ```bash
-        Terraform v0.14.0 # any version >= v0.14.0 is OK
+        Terraform v0.13.0 # any version >= v0.13.0 is OK
         ...
         ```
 
-3. A Confluent Cloud API Key
+3. Confluent Cloud requires API keys to manage access and authentication to different parts of the service. An API key consists of a key and a secret. You can create and manage API keys by using either the [Confluent Cloud CLI](https://docs.confluent.io/ccloud-cli/current/index.html) or the [Confluent Cloud Console](https://confluent.cloud/). Learn more about Confluent Cloud API Key access [here](https://docs.confluent.io/cloud/current/client-apps/api-keys.html#ccloud-api-keys).
+
    1. Open the [Confluent Cloud Console](https://confluent.cloud/settings/api-keys/create) and click **Granular access** tab, and then click **Next**.
    2. Click **Create a new one to create** tab. Enter the new service account name (`tf_runner`), then click **Next**.
    3. The Cloud API key and secret are generated for the `tf_runner` service account. Save your Cloud API key and secret in a secure location. You will need this API key and secret **to use the Confluent Terraform Provider**.
